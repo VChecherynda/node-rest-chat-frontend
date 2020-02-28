@@ -11,7 +11,7 @@ export default handleActions(
   {
     [fetchUsersResponse]: (state, { payload }) => ({
       ...state,
-      list: [state.list, ...payload]
+      list: [...state.list, ...payload]
     }),
     [fetchUsersError]: (state, { payload }) => ({
       ...state,

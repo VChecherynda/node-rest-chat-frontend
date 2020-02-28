@@ -2,12 +2,25 @@ import React from 'react';
 
 import styles from './styles.module.scss';
 
-interface DrawerProps {
+import useHooks from './hooks';
 
+interface DrawerProps {
+}
+
+interface UserProps {
+  id: number
+  name: string
+  email: string
 }
 
 const Drawer = (props: DrawerProps) => {
-  return <div className={styles.Drawer}>Drawer</div>
+  const { users } = useHooks();
+
+  return (
+    <div className={styles.Drawer}>
+      <ul>{users.map((user: UserProps) => <li key={user.id}>{user.name}</li>)}</ul>
+    </div>
+  );
 }
 
 export default Drawer;
