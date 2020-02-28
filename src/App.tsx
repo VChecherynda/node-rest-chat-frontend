@@ -4,14 +4,14 @@ import { PersistGate } from "redux-persist/integration/react";
 
 import { store, persistor } from "./store";
 
+import Main from 'views/main';
+
 
 function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <div className="App">
-          App
-        </div>
+        <Main />
       </PersistGate>
     </Provider>
   );
