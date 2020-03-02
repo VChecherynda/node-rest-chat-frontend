@@ -1,6 +1,6 @@
 import { takeEvery, select, call, put } from "redux-saga/effects";
 
-import { addMessage } from "store/modules/conversations/actions";
+import { addMessage } from "store/modules/messages/actions";
 
 export function* addMessageWorker() {
   try {
@@ -9,8 +9,8 @@ export function* addMessageWorker() {
   }
 }
 
-export function* messageWatcher() {
+export function* messagesWatcher() {
   yield takeEvery(addMessage, addMessageWorker);
 }
 
-export default messageWatcher;
+export default messagesWatcher;

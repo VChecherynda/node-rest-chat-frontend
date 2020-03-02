@@ -14,11 +14,17 @@ interface UserProps {
 }
 
 const Drawer = (props: DrawerProps) => {
-  const { users } = useHooks();
+  const { users, useOpenUsersModal } = useHooks();
 
   return (
     <div className={styles.Drawer}>
-      <ul>{users.map((user: UserProps) => <li key={user.id}>{user.name}</li>)}</ul>
+      <button onClick={useOpenUsersModal} type="button">Add user + </button>
+
+      {/* <ul>{users.map((user: UserProps) => (
+        <li onClick={() => useFetchConversations(user.id)} key={user.id}>
+          {user.name}
+        </li>))}
+      </ul> */}
     </div>
   );
 }

@@ -1,7 +1,12 @@
 import axios from "axios";
 import "./interceptors";
 
-const apiRequest = async options => {
+interface ApiProps {
+  url: string
+  data?: any
+}
+
+const apiRequest = async (options: ApiProps) => {
   const { url = "" } = options;
 
   const response = await axios({
@@ -13,10 +18,8 @@ const apiRequest = async options => {
   return response;
 };
 
-export const fetchRequest = ({ url, ...rest }) =>
+export const fetchRequest = ({ url, data }: ApiProps) =>
   apiRequest({
     url,
-    data: {
-      ...rest.payload
-    }
+    data
   });

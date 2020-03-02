@@ -1,21 +1,35 @@
 import { handleActions } from "redux-actions";
 
-import { addMessageResponse, addMessageError } from "./actions";
+import {
+  setLoading,
+  fetchConversationsResponse,
+  fetchConversationsError,
+  clearUsers
+} from "./actions";
 
 const defaultState = {
   list: [],
+  loading: false,
   error: ""
 };
 
 export default handleActions(
   {
-    [addMessageResponse]: (state, { payload }) => ({
+    [setLoading]: (state, { payload }) => ({
       ...state,
-      list: [state.list, ...payload]
+      loading: payload
     }),
-    [addMessageError]: (state, { payload }) => ({
+    [fetchConversationsResponse]: (state, { payload }) => ({
+      ...state,
+      list: payload
+    }),
+    [fetchConversationsError]: (state, { payload }) => ({
       ...state,
       error: payload
+    }),
+    [clearUsers]: (state, { payload }) => ({
+      ...state,
+      list: []
     })
   },
   defaultState

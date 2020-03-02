@@ -2,6 +2,7 @@ import { takeEvery, select, call, put } from "redux-saga/effects";
 import { store } from "store";
 
 import {
+  setLoading,
   fetchUsers,
   fetchUsersResponse,
   fetchUsersError
@@ -11,6 +12,7 @@ import { fetchRequest } from "sagas/api";
 
 export function* fetchUsersWorker() {
   try {
+    yield put(setLoading(true));
     const response = yield call(fetchRequest, { url: "/users/list" });
 
     if (response.status === 200) {
@@ -18,6 +20,7 @@ export function* fetchUsersWorker() {
     }
   } catch (error) {
   } finally {
+    yield put(setLoading(false));
   }
 }
 
