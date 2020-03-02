@@ -1,26 +1,23 @@
-import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchConversations } from "store/modules/conversations/actions";
-import { getUsers } from "store/modules/users/selectors";
+import { getLoading, getConversations } from "store/modules/conversations/selectors";
 
 import { setModalStatus } from "store/modules/modals/actions";
 
 export default () => {
   const dispatch = useDispatch();
 
-  const users = useSelector(getUsers);
+  const loading = useSelector(getLoading);
+
+  const conversations = useSelector(getConversations);
 
   const useOpenUsersModal = () => {
     dispatch(setModalStatus("createConversation"));
   };
 
-  useEffect(() => {
-    dispatch(fetchConversations());
-  }, [dispatch]);
-
   return {
-    users,
+    loading,
+    conversations,
     useOpenUsersModal
   };
 };

@@ -5,9 +5,11 @@ import conversationsSaga from "./conversations";
 import messageSaga from "./message";
 
 const rootSaga = function* root() {
-  yield all([usersSaga()]);
-  yield all([conversationsSaga()]);
-  yield all([messageSaga()]);
+  yield all([
+    usersSaga(),
+    conversationsSaga(),
+    messageSaga()
+  ]);
 };
 
 export default rootSaga;
