@@ -1,4 +1,5 @@
 import React from 'react';
+import { format } from 'date-fns'
 
 import styles from './styles.module.scss'
 
@@ -7,6 +8,7 @@ import useHooks from "./hooks"
 interface MessageProps {
   id: number
   text: string
+  createdAt: string
 }
 
 const Messages = () => {
@@ -18,7 +20,11 @@ const Messages = () => {
         <p>Loading...</p>
         :
         messages.map((message: MessageProps) => {
-          return <div key={message.id}>{message.text}</div>
+          return (
+            <div key={message.id}>
+              <p>{message.text}</p>
+              <p>{format(new Date(message.createdAt), 'dd-MM-yyyy')}</p>
+            </div>)
         })
       }
     </div>
