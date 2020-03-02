@@ -12,21 +12,36 @@ interface MessageProps {
 }
 
 const Messages = () => {
-  const { loading, messages } = useHooks();
+  const { loading, messages, value, useSetValue, useAddMessage } = useHooks();
 
   return (
     <div className={styles.Messages}>
-      {loading ? 
-        <p>Loading...</p>
-        :
-        messages.map((message: MessageProps) => {
-          return (
-            <div key={message.id}>
-              <p>{message.text}</p>
-              <p>{format(new Date(message.createdAt), 'dd-MM-yyyy')}</p>
-            </div>)
-        })
-      }
+      <div className={styles.Output}>
+        {loading ? 
+          <p>Loading...</p>
+          :
+          messages.map((message: MessageProps) => {
+            return (
+              <div key={message.id}>
+                <p>{message.text}</p>
+                <p>{format(new Date(message.createdAt), 'dd-MM-yyyy')}</p>
+              </div>)
+          })
+        }
+      </div>
+
+      <div className={styles.Add}>
+        <form onSubmit={useAddMessage}>
+          <textarea 
+            value={value}
+            name="message-add"
+            cols={30}
+            rows={10}
+            onChange={useSetValue}
+          />
+          <button type="submit">Add</button>
+        </form>
+      </div>
     </div>
   );
 }
