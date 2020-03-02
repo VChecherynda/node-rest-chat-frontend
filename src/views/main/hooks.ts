@@ -7,9 +7,7 @@ import { fetchConversations } from "store/modules/conversations/actions";
 export default () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log('[main]');
-    
+  useEffect(() => {    
     dispatch(fetchConversations());
   }, [dispatch]);
 

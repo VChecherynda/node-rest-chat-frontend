@@ -1,1 +1,2 @@
-export const getMessages = state => state.conversations.messages;
+export const getLoading = state => state.messages.loading;
+export const getMessagesList = state => state.messages.list;

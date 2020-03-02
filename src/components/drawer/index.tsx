@@ -14,21 +14,23 @@ interface UserProps {
 }
 
 const Drawer = (props: DrawerProps) => {
-  const { loading, conversations, useOpenUsersModal } = useHooks();
+  const { loading, conversations, useOpenUsersModal, useGetConversation } = useHooks();
 
   return (
     <div className={styles.Drawer}>
       <button onClick={useOpenUsersModal} type="button">Add user + </button>
 
-
-      {loading 
-        ? 
+      {loading ? 
         <p>Loading...</p>
         :
-        <ul>{conversations.map((conversation: UserProps) => (
-          <li  key={conversation.id}>
-            {conversation.id}
-          </li>))}
+        <ul>
+          {conversations.map((conversation: UserProps) => (
+            <li key={conversation.id}>
+              <button type="button" value={conversation.id} onClick={useGetConversation}>
+                {conversation.id}
+              </button>
+            </li>))
+          }
         </ul>
       }
     </div>

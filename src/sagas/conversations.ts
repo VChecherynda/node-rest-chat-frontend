@@ -10,6 +10,10 @@ import {
 
 import { fetchRequest } from "sagas/api";
 
+interface PayloadProps {
+  payload: string
+}
+
 export function* fetchConversationsWorker() {
   try {
     yield put(setLoading(true));
