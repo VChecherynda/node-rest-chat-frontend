@@ -42,7 +42,10 @@ export default () => {
       }));
     }
 
-    dispatch(addMessage({ text: editableMessage.text }));
+    dispatch(addMessage({ 
+      conversationId: editableConversation.id,
+      text: editableMessage.text
+    }));
   }
 
   const useEditMessage = (event: React.FormEvent<HTMLButtonElement>) => {

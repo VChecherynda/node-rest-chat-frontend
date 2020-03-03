@@ -3,6 +3,9 @@ import { store } from "store";
 
 import { 
   setLoading,
+  createConversation,
+  createConversationResponse,
+  createConversationError,
   fetchConversations,
   fetchConversationsResponse,
   fetchConversationsError
@@ -10,8 +13,41 @@ import {
 
 import { fetchRequest } from "sagas/api";
 
+interface UsersProps {
+  userOneId: string
+  userTwoId: string
+}
+
 interface PayloadProps {
-  payload: string
+  payload: UsersProps
+}
+
+export function* createConversationWorker({ 
+  payload: { userOneId = '3', userTwoId } 
+}: PayloadProps) {
+  try {
+    yield put(setLoading(true));
+
+    const response = yield call(fetchRequest, { 
+      url: "/conversations/create",
+      data: {
+        userOneId,
+        userTwoId
+      },
+      method: 'POST' 
+    });
+
+    if (response.status === 200) {
+      yield put(createConversationResponse(response.data));
+    }
+
+  } catch (error) {
+
+    yield put(createConversationError(error.response.data));
+
+  } finally {
+    yield put(setLoading(false));
+  }
 }
 
 export function* fetchConversationsWorker() {
@@ -34,6 +70,7 @@ export function* fetchConversationsWorker() {
 }
 
 export function* conversationsWatcher() {
+  yield takeEvery(createConversation, createConversationWorker);
   yield takeEvery(fetchConversations, fetchConversationsWorker);
 }
 

@@ -10,4 +10,12 @@ export const fetchConversationsResponse = createAction(
 );
 export const fetchConversationsError = createAction("FETCH_CONVERSATION_ERROR");
 
+export const createConversation = createAction("CREATE_CONVERSATION");
+export const createConversationResponse = createAction(
+  "CREATE_CONVERSATION_RESPONSE"
+);
+export const createConversationError = createAction(
+  "CREATE_CONVERSATION_ERROR"
+);
+
 export const clearUsers = createAction("CLEAR_USERS");

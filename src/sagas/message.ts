@@ -48,7 +48,7 @@ export function* fetchMessagesWorker({ payload }: PayloadProps) {
 }
 
 export function* addMessageWorker({
-  payload: { userId = '3', conversationId = '2', text }
+  payload: { userId = '3', conversationId, text }
 }: PayloadProps) {
   try {
     yield put(setLoading(true));
