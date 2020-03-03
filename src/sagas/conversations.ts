@@ -37,7 +37,7 @@ export function* createConversationWorker({
       method: 'POST' 
     });
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       yield put(createConversationResponse(response.data));
     }
 

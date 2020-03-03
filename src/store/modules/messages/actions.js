@@ -1,6 +1,6 @@
 import { createAction } from "redux-actions";
 
-export const setLoading = createAction("SET_LOADING");
+export const setLoading = createAction("SET_MESSAGES_LOADING");
 
 export const editMessage = createAction("EDIT_MESSAGE");
 

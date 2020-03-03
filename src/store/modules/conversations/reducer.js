@@ -3,6 +3,8 @@ import { handleActions } from "redux-actions";
 import {
   setLoading,
   updateConversation,
+  createConversationResponse,
+  createConversationError,
   fetchConversationsResponse,
   fetchConversationsError,
   clearUsers
@@ -24,6 +26,18 @@ export default handleActions(
     [updateConversation]: (state, { payload }) => ({
       ...state,
       entities: payload
+    }),
+    [createConversationResponse]: (state, { payload }) => {
+      console.log("[createConversationResponse]", payload);
+
+      return {
+        ...state,
+        list: [...state.list, payload]
+      };
+    },
+    [createConversationError]: (state, { payload }) => ({
+      ...state,
+      error: payload
     }),
     [fetchConversationsResponse]: (state, { payload }) => ({
       ...state,

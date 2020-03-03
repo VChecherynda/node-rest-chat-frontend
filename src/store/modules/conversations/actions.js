@@ -1,6 +1,6 @@
 import { createAction } from "redux-actions";
 
-export const setLoading = createAction("SET_LOADING");
+export const setLoading = createAction("SET_CONVERSATINS_LOADING");
 
 export const updateConversation = createAction("UPDATE_CONVERSATION");
 

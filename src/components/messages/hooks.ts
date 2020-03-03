@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+import { getConversationsList } from "store/modules/conversations/selectors";
 
 import { 
   addMessage,
@@ -24,6 +26,7 @@ export default () => {
   const loading = useSelector(getLoading);
 
   const messages = useSelector(getMessagesList);
+
 
   const editableMessage = useSelector(getMessagesEntities);
 
@@ -67,6 +70,10 @@ export default () => {
     shalowCopy.text = value;
     dispatch(editMessage(shalowCopy));
   }
+
+  useEffect(() => {
+    dispatch(editMessage({}));
+  },[editableConversation])
 
   return {
     loading,

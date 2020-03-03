@@ -34,6 +34,7 @@ export default handleActions(
     }),
     [addMessageResponse]: (state, { payload }) => ({
       ...state,
+      entities: {},
       list: [...state.list, payload]
     }),
     [addMessageError]: (state, { payload }) => ({

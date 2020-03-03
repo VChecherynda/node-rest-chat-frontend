@@ -11,13 +11,11 @@ interface UserProps {
 }
 
 export default () => {
-  const { loading, status, users, useCreateConversation, useClearUsers} = useHooks();
-
-  console.log('[users]', users);
-
+  const { loading, status, users, useCreateConversation} = useHooks();
+  
   if (status === 'createConversation') {
     return (
-      <Modal reject={useClearUsers} accept={() => {}}>
+      <Modal reject={() => {}} accept={() => {}}>
           {
             loading ? 
             <p>Loading...</p>

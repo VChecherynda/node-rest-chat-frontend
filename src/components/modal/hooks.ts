@@ -10,7 +10,6 @@ export default ({ reject }: ModalProps ) => {
   const dispatch = useDispatch();
 
   const useCloseModal = () => {
-    reject();
     dispatch(closeModal());
   };
 

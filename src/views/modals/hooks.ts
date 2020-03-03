@@ -6,6 +6,7 @@ import { getLoading, getUsers } from "store/modules/users/selectors";
 
 import { createConversation } from "store/modules/conversations/actions";
 
+import { closeModal } from "store/modules/modals/actions";
 import { getShowStatus } from "store/modules/modals/selectors";
 
 export default () => {
@@ -18,11 +19,12 @@ export default () => {
   const users = useSelector(getUsers);
   
   const useCreateConversation = (event: React.FormEvent<HTMLButtonElement>) => {
-    const { value } = (event.target as HTMLButtonElement)
-    dispatch(createConversation({ userTwoId: value}))
+    const { value } = (event.target as HTMLButtonElement);
+    dispatch(createConversation({ userTwoId: value}));
+    dispatch(closeModal());
   }
 
-  const useClearUsers = () => { dispatch(clearUsers())}
+  // const useClearUsers = () => { dispatch(clearUsers())}
 
   useEffect(() => {
     if (status === 'createConversation') {
@@ -30,7 +32,7 @@ export default () => {
     }
   }, [dispatch, status]);
 
-  return { loading, status, users, useCreateConversation, useClearUsers };
+  return { loading, status, users, useCreateConversation };
 };
 
 
