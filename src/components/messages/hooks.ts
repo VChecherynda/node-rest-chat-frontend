@@ -15,7 +15,7 @@ import {
 } from "store/modules/messages/selectors";
 
 export default () => {
-  const [value, setValue] = useState('');
+  // const [value, setValue] = useState('');
 
   const dispatch = useDispatch();
 
@@ -25,14 +25,16 @@ export default () => {
 
   const editableMessage = useSelector(getMessagesEntities);
 
+  const value = editableMessage.text || '';
+
   const useAddMessage = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (editableMessage.id) {
-      return dispatch(updateMessage({ messageId: editableMessage.id, text: value }));
+      return dispatch(updateMessage({ messageId: editableMessage.id, text: editableMessage.text }));
     }
 
-    dispatch(addMessage({ text: value }));
+    dispatch(addMessage({ text: editableMessage.text }));
   }
 
   const useEditMessage = (event: React.FormEvent<HTMLButtonElement>) => {
@@ -40,7 +42,6 @@ export default () => {
     const editableMessage = messages.find((item: { id: string } ) => String(item.id) === String(value));
 
     dispatch(editMessage(editableMessage));
-    setValue(editableMessage.text)
   }
 
   const useDeleteMessage = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -50,13 +51,16 @@ export default () => {
 
   const useSetValue = (event: React.FormEvent<HTMLTextAreaElement>) => {
     const { value } = (event.target as HTMLTextAreaElement)
-    setValue(value);
+
+    const shalowCopy = { ...editableMessage };
+    shalowCopy.text = value;
+    dispatch(editMessage(shalowCopy));
   }
 
   return {
     loading,
-    messages,
     value,
+    messages,
     useAddMessage,
     useEditMessage,
     useDeleteMessage,

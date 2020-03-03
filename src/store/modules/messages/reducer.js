@@ -41,13 +41,14 @@ export default handleActions(
       error: payload
     }),
     [updateMessageResponse]: (state, { payload }) => {
+      const shalowCopy = [...state.list];
       const findIndex = state.list.findIndex(item => item.id === payload.id);
-      state.list[findIndex] = payload;
+      shalowCopy[findIndex] = payload;
 
       return {
         ...state,
         entities: {},
-        list: state.list
+        list: shalowCopy
       };
     },
     [updateMessageError]: (state, { payload }) => ({
