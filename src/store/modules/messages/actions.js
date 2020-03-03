@@ -2,7 +2,7 @@ import { createAction } from "redux-actions";
 
 export const setLoading = createAction("SET_LOADING");
 
-export const editMessage = createAction("SET_LOADING");
+export const editMessage = createAction("EDIT_MESSAGE");
 
 export const fetchMessages = createAction("FETCH_MESSAGE");
 export const fetchMessagesResponse = createAction("FETCH_MESSAGE_RESPONSE");

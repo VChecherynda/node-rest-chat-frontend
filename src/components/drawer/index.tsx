@@ -26,7 +26,11 @@ const Drawer = (props: DrawerProps) => {
         <ul>
           {conversations.map((conversation: UserProps) => (
             <li key={conversation.id}>
-              <button type="button" value={conversation.id} onClick={useGetConversation}>
+              <button 
+                type="button"
+                value={conversation.id}
+                onClick={useGetConversation}
+              >
                 {conversation.id}
               </button>
             </li>))

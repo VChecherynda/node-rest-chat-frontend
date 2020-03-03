@@ -2,6 +2,8 @@ import { createAction } from "redux-actions";
 
 export const setLoading = createAction("SET_LOADING");
 
+export const updateConversation = createAction("UPDATE_CONVERSATION");
+
 export const fetchConversations = createAction("FETCH_CONVERSATION");
 export const fetchConversationsResponse = createAction(
   "FETCH_CONVERSATION_RESPONSE"

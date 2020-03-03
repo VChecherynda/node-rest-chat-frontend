@@ -80,7 +80,7 @@ export function* addMessageWorker({
 }
 
 export function* updateMessageWorker({
-  payload: { messageId = '3', text }
+  payload: { messageId, text }
 }: PayloadProps) {
   try {
     yield put(setLoading(true));

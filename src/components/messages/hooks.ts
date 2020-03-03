@@ -14,6 +14,10 @@ import {
   getMessagesEntities
 } from "store/modules/messages/selectors";
 
+import { 
+  getConversationsEntities
+} from "store/modules/conversations/selectors";
+
 export default () => {
   const dispatch = useDispatch();
 
@@ -23,6 +27,8 @@ export default () => {
 
   const editableMessage = useSelector(getMessagesEntities);
 
+  const editableConversation = useSelector(getConversationsEntities);
+
   const value = editableMessage.text || '';
 
   const useAddMessage = (event: React.FormEvent<HTMLFormElement>) => {
@@ -30,6 +36,7 @@ export default () => {
 
     if (editableMessage.id) {
       return dispatch(updateMessage({ 
+        conversationId: editableConversation.id,
         messageId: editableMessage.id, 
         text: editableMessage.text 
       }));
