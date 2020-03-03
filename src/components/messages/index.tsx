@@ -12,7 +12,14 @@ interface MessageProps {
 }
 
 const Messages = () => {
-  const { loading, messages, value, useSetValue, useAddMessage } = useHooks();
+  const { 
+    loading,
+    messages,
+    value,
+    useSetValue,
+    useAddMessage,
+    useDeleteMessage
+  } = useHooks();
 
   return (
     <div className={styles.Messages}>
@@ -24,7 +31,11 @@ const Messages = () => {
             return (
               <div key={message.id}>
                 <p>{message.text}</p>
-                <p>{format(new Date(message.createdAt), 'dd-MM-yyyy')}</p>
+                <p>{message.createdAt}</p>
+
+                {/* <p>{format(new Date(message.createdAt), 'dd-MM-yyyy hh:mm')}</p> */}
+
+                <button value={message.id} onClick={useDeleteMessage} type="button">Delete</button>
               </div>)
           })
         }

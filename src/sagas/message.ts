@@ -7,13 +7,20 @@ import {
   fetchMessagesError,
   addMessage,
   addMessageResponse,
-  addMessageError
+  addMessageError,
+  deleteMessage,
+  deleteMessageResponse,
+  deleteMessageError
 } from "store/modules/messages/actions";
 
 import { fetchRequest } from "sagas/api";
 
 interface PayloadProps {
-  payload: string
+  payload?: any
+  messageId?: string
+  userId?: string
+  conversationId?: string
+  text?: string
 }
 
 export function* fetchMessagesWorker({ payload }: PayloadProps) {
@@ -31,20 +38,78 @@ export function* fetchMessagesWorker({ payload }: PayloadProps) {
     yield put(fetchMessagesError(error.response.data));
 
   } finally {
+
     yield put(setLoading(false));
+
   }
 }
 
-export function* addMessageWorker() {
+export function* addMessageWorker({
+  payload: { userId = '3', conversationId = '2', text }
+}: PayloadProps) {
   try {
+    yield put(setLoading(true));
+    
+    const response = yield call(fetchRequest, { 
+      url: '/messages/create/', 
+      data: {
+        userId,
+        conversationId,
+        text
+      },
+      method: 'POST' 
+    });
+
+    if (response.status === 201) {
+
+      yield put(addMessageResponse(response.data));
+
+    }
   } catch (error) {
+
+    yield put(addMessageError(error.response.data));
+
   } finally {
+
+    yield put(setLoading(false));
+
+  }
+}
+
+export function* deleteMessageWorker({
+  payload: { messageId }
+}: PayloadProps) {
+  try {
+    yield put(setLoading(true));
+
+    const response = yield call(fetchRequest, { 
+      url: '/messages/delete/', 
+      data: {
+        messageId
+      },
+      method: 'DELETE'
+    });
+
+    if (response.status === 200) {
+
+      yield put(deleteMessageResponse(response.data));
+
+    }
+  } catch (error) {
+
+    yield put(deleteMessageError(error.response.data));
+
+  } finally {
+
+    yield put(setLoading(false));
+
   }
 }
 
 export function* messagesWatcher() {
   yield takeEvery(fetchMessages, fetchMessagesWorker);
   yield takeEvery(addMessage, addMessageWorker);
+  yield takeEvery(deleteMessage, deleteMessageWorker);
 }
 
 export default messagesWatcher;

@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
+import { addMessage, deleteMessage } from "store/modules/messages/actions";
 import { getLoading, getMessagesList } from "store/modules/messages/selectors";
 
 export default () => {
   const [value, setValue] = useState('');
+
+  const dispatch = useDispatch();
 
   const loading = useSelector(getLoading);
 
@@ -12,9 +15,14 @@ export default () => {
 
   const useAddMessage = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('[submit]', value);
+    dispatch(addMessage({ text: value }));
     setValue('');
   }
+
+  const useDeleteMessage = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const { value } = (event.target as HTMLButtonElement)
+    dispatch(deleteMessage({ messageId: value }));
+  };
 
   const useSetValue = (event: React.FormEvent<HTMLTextAreaElement>) => {
     const { value } = (event.target as HTMLTextAreaElement)
@@ -26,6 +34,7 @@ export default () => {
     messages,
     value,
     useAddMessage,
+    useDeleteMessage,
     useSetValue
   };
 };

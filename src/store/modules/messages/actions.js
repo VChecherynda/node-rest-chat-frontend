@@ -10,4 +10,8 @@ export const addMessage = createAction("ADD_MESSAGE");
 export const addMessageResponse = createAction("ADD_MESSAGE_RESPONSE");
 export const addMessageError = createAction("ADD_MESSAGE_ERROR");
 
+export const deleteMessage = createAction("DELETE_MESSAGE");
+export const deleteMessageResponse = createAction("DELETE_MESSAGE_RESPONSE");
+export const deleteMessageError = createAction("DELETE_MESSAGE_ERROR");
+
 export const clearMessages = createAction("CLEAR_MESSAGES");

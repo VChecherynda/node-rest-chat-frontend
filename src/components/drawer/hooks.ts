@@ -19,7 +19,6 @@ export default () => {
 
   const useGetConversation = (event: React.MouseEvent<HTMLButtonElement>) => {
     const { value } = (event.target as HTMLButtonElement)
-
     dispatch(fetchMessages(value));
   };
 

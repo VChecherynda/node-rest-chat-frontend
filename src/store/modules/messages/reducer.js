@@ -4,7 +4,9 @@ import {
   fetchMessagesResponse,
   fetchMessagesError,
   addMessageResponse,
-  addMessageError
+  addMessageError,
+  deleteMessageResponse,
+  deleteMessageError
 } from "./actions";
 
 const defaultState = {
@@ -26,9 +28,17 @@ export default handleActions(
     }),
     [addMessageResponse]: (state, { payload }) => ({
       ...state,
-      list: [state.list, ...payload]
+      list: [...state.list, payload]
     }),
     [addMessageError]: (state, { payload }) => ({
+      ...state,
+      error: payload
+    }),
+    [deleteMessageResponse]: (state, { payload }) => ({
+      ...state,
+      list: state.list.filter(item => item.id !== payload.messageId)
+    }),
+    [deleteMessageError]: (state, { payload }) => ({
       ...state,
       error: payload
     })

@@ -16,7 +16,7 @@ export default (rootReducer, rootSaga, history) => {
   const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["message"]
+    whitelist: ["messages"]
   };
 
   const persistedReducer = persistReducer(persistConfig, rootReducer);
