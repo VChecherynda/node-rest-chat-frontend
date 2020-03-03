@@ -15,8 +15,6 @@ import {
 } from "store/modules/messages/selectors";
 
 export default () => {
-  // const [value, setValue] = useState('');
-
   const dispatch = useDispatch();
 
   const loading = useSelector(getLoading);
@@ -31,7 +29,10 @@ export default () => {
     event.preventDefault();
 
     if (editableMessage.id) {
-      return dispatch(updateMessage({ messageId: editableMessage.id, text: editableMessage.text }));
+      return dispatch(updateMessage({ 
+        messageId: editableMessage.id, 
+        text: editableMessage.text 
+      }));
     }
 
     dispatch(addMessage({ text: editableMessage.text }));
