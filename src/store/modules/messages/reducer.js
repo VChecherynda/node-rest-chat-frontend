@@ -1,27 +1,33 @@
 import { handleActions } from "redux-actions";
 
 import {
+  editMessage,
   fetchMessagesResponse,
   fetchMessagesError,
   addMessageResponse,
   addMessageError,
+  updateMessageResponse,
+  updateMessageError,
   deleteMessageResponse,
   deleteMessageError
 } from "./actions";
 
 const defaultState = {
+  entities: {},
   list: [],
   error: ""
 };
 
 export default handleActions(
   {
-    [fetchMessagesResponse]: (state, { payload }) => {
-      return {
-        ...state,
-        list: [...payload]
-      };
-    },
+    [editMessage]: (state, { payload }) => ({
+      ...state,
+      entities: payload
+    }),
+    [fetchMessagesResponse]: (state, { payload }) => ({
+      ...state,
+      list: [...payload]
+    }),
     [fetchMessagesError]: (state, { payload }) => ({
       ...state,
       error: payload
@@ -31,6 +37,20 @@ export default handleActions(
       list: [...state.list, payload]
     }),
     [addMessageError]: (state, { payload }) => ({
+      ...state,
+      error: payload
+    }),
+    [updateMessageResponse]: (state, { payload }) => {
+      const findIndex = state.list.findIndex(item => item.id === payload.id);
+      state.list[findIndex] = payload;
+
+      return {
+        ...state,
+        entities: {},
+        list: state.list
+      };
+    },
+    [updateMessageError]: (state, { payload }) => ({
       ...state,
       error: payload
     }),

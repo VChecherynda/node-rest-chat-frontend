@@ -8,6 +8,9 @@ import {
   addMessage,
   addMessageResponse,
   addMessageError,
+  updateMessage,
+  updateMessageResponse,
+  updateMessageError,
   deleteMessage,
   deleteMessageResponse,
   deleteMessageError
@@ -49,7 +52,7 @@ export function* addMessageWorker({
 }: PayloadProps) {
   try {
     yield put(setLoading(true));
-    
+
     const response = yield call(fetchRequest, { 
       url: '/messages/create/', 
       data: {
@@ -68,6 +71,37 @@ export function* addMessageWorker({
   } catch (error) {
 
     yield put(addMessageError(error.response.data));
+
+  } finally {
+
+    yield put(setLoading(false));
+
+  }
+}
+
+export function* updateMessageWorker({
+  payload: { messageId = '3', text }
+}: PayloadProps) {
+  try {
+    yield put(setLoading(true));
+    
+    const response = yield call(fetchRequest, { 
+      url: '/messages/update/', 
+      data: {
+        messageId,
+        text
+      },
+      method: 'PUT' 
+    });
+
+    if (response.status === 201) {
+
+      yield put(updateMessageResponse(response.data));
+
+    }
+  } catch (error) {
+
+    yield put(updateMessageError(error.response));
 
   } finally {
 
@@ -109,6 +143,7 @@ export function* deleteMessageWorker({
 export function* messagesWatcher() {
   yield takeEvery(fetchMessages, fetchMessagesWorker);
   yield takeEvery(addMessage, addMessageWorker);
+  yield takeEvery(updateMessage, updateMessageWorker);
   yield takeEvery(deleteMessage, deleteMessageWorker);
 }
 

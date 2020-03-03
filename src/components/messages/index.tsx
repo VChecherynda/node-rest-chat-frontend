@@ -18,6 +18,7 @@ const Messages = () => {
     value,
     useSetValue,
     useAddMessage,
+    useEditMessage,
     useDeleteMessage
   } = useHooks();
 
@@ -35,6 +36,7 @@ const Messages = () => {
 
                 {/* <p>{format(new Date(message.createdAt), 'dd-MM-yyyy hh:mm')}</p> */}
 
+                <button value={message.id} onClick={useEditMessage} type="button">Edit</button>
                 <button value={message.id} onClick={useDeleteMessage} type="button">Delete</button>
               </div>)
           })

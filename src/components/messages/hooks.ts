@@ -1,8 +1,18 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
-import { addMessage, deleteMessage } from "store/modules/messages/actions";
-import { getLoading, getMessagesList } from "store/modules/messages/selectors";
+import { 
+  addMessage,
+  editMessage,
+  updateMessage,
+  deleteMessage
+} from "store/modules/messages/actions";
+
+import { 
+  getLoading,
+  getMessagesList,
+  getMessagesEntities
+} from "store/modules/messages/selectors";
 
 export default () => {
   const [value, setValue] = useState('');
@@ -13,10 +23,24 @@ export default () => {
 
   const messages = useSelector(getMessagesList);
 
+  const editableMessage = useSelector(getMessagesEntities);
+
   const useAddMessage = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (editableMessage.id) {
+      return dispatch(updateMessage({ messageId: editableMessage.id, text: value }));
+    }
+
     dispatch(addMessage({ text: value }));
-    setValue('');
+  }
+
+  const useEditMessage = (event: React.FormEvent<HTMLButtonElement>) => {
+    const { value } = (event.target as HTMLButtonElement)
+    const editableMessage = messages.find((item: { id: string } ) => String(item.id) === String(value));
+
+    dispatch(editMessage(editableMessage));
+    setValue(editableMessage.text)
   }
 
   const useDeleteMessage = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -34,6 +58,7 @@ export default () => {
     messages,
     value,
     useAddMessage,
+    useEditMessage,
     useDeleteMessage,
     useSetValue
   };
