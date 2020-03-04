@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getConversationsList } from "store/modules/conversations/selectors";
-
 import { 
   addMessage,
   editMessage,
@@ -26,7 +24,6 @@ export default () => {
   const loading = useSelector(getLoading);
 
   const messages = useSelector(getMessagesList);
-
 
   const editableMessage = useSelector(getMessagesEntities);
 
