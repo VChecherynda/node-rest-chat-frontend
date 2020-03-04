@@ -27,7 +27,9 @@ export default () => {
 
   const editableMessage = useSelector(getMessagesEntities);
 
-  const editableConversation = useSelector(getConversationsEntities);
+  const selectConversation = useSelector(getConversationsEntities);
+
+  const isConversationSelect = Object.keys(selectConversation).length > 0;
 
   const value = editableMessage.text || '';
 
@@ -36,14 +38,14 @@ export default () => {
 
     if (editableMessage.id) {
       return dispatch(updateMessage({ 
-        conversationId: editableConversation.id,
+        conversationId: selectConversation.id,
         messageId: editableMessage.id, 
         text: editableMessage.text 
       }));
     }
 
     dispatch(addMessage({ 
-      conversationId: editableConversation.id,
+      conversationId: selectConversation.id,
       text: editableMessage.text
     }));
   }
@@ -70,10 +72,11 @@ export default () => {
 
   useEffect(() => {
     dispatch(editMessage({}));
-  },[editableConversation])
+  },[selectConversation])
 
   return {
     loading,
+    isConversationSelect,
     value,
     messages,
     useAddMessage,

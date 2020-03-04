@@ -11,7 +11,7 @@ interface UserProps {
 }
 
 export default () => {
-  const { loading, status, users, useCreateConversation} = useHooks();
+  const { loading, status, filteredUsers, useCreateConversation} = useHooks();
   
   if (status === 'createConversation') {
     return (
@@ -21,7 +21,7 @@ export default () => {
             <p>Loading...</p>
             :
             <ul>
-              {users.map((user: UserProps, index: number) =>
+              {filteredUsers.map((user: UserProps, index: number) =>
                 <li key={`${index}-${user.name}`}>
                   <button 
                     value={user.id}

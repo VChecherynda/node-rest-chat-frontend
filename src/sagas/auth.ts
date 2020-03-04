@@ -68,12 +68,12 @@ export function* signUpWorker({
     });
 
     if (response.status === 201) {
-      yield put(signInResponse(response.data));
+      yield put(signUpResponse(response.data));
     }
 
   } catch (error) {
 
-    yield put(signInError(error.response.data.message));
+    yield put(signUpError(error.response.data.message));
 
   } finally {
     yield put(setLoading(false));

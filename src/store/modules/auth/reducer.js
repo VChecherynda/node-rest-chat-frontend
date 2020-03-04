@@ -6,8 +6,7 @@ import {
   signInError,
   signUpResponse,
   signUpError,
-  clearErrors,
-  logOut
+  clearErrors
 } from "./actions";
 
 const defaultState = {
@@ -44,9 +43,6 @@ export default handleActions(
     [clearErrors]: (state, { payload }) => ({
       ...state,
       error: ""
-    }),
-    [logOut]: () => ({
-      defaultState
     })
   },
   defaultState

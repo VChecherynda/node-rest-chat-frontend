@@ -14,8 +14,9 @@ interface MessageProps {
 const Messages = () => {
   const { 
     loading,
-    messages,
+    isConversationSelect,
     value,
+    messages,
     useSetValue,
     useAddMessage,
     useEditMessage,
@@ -43,18 +44,20 @@ const Messages = () => {
         }
       </div>
 
-      <div className={styles.Add}>
-        <form onSubmit={useAddMessage}>
-          <textarea 
-            value={value}
-            name="message-add"
-            cols={30}
-            rows={10}
-            onChange={useSetValue}
-          />
-          <button type="submit">Add</button>
-        </form>
-      </div>
+      {isConversationSelect && (
+        <div className={styles.Add}>
+          <form onSubmit={useAddMessage}>
+            <textarea 
+              value={value}
+              name="message-add"
+              cols={30}
+              rows={10}
+              onChange={useSetValue}
+            />
+            <button type="submit">Add</button>
+          </form>
+        </div>
+      )}
     </div>
   );
 }

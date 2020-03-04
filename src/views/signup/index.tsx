@@ -18,7 +18,6 @@ const SignUp = () => {
     useSubmit
   } = useHooks();
 
-
   return (
     <div className={styles.SignUp}>
       {error && <p className={styles.SignUpError}>{error}</p>}

@@ -11,12 +11,11 @@ import {
   fetchConversationsError
 } from "store/modules/conversations/actions";
 
-import { getToken } from "store/modules/auth/selectors";
+import { getToken, getUserId } from "store/modules/auth/selectors";
 
 import { fetchRequest } from "sagas/api";
 
 interface UsersProps {
-  userOneId: string
   userTwoId: string
 }
 
@@ -25,18 +24,22 @@ interface PayloadProps {
 }
 
 export function* createConversationWorker({ 
-  payload: { userOneId = '3', userTwoId } 
+  payload: { userTwoId } 
 }: PayloadProps) {
   try {
     yield put(setLoading(true));
 
+    const userOneId = yield select(getUserId);
+    const token = yield select(getToken);
+
     const response = yield call(fetchRequest, { 
       url: "/conversations/create",
+      method: 'POST',
+      headers: { authorization: `Bearer ${token}` },
       data: {
         userOneId,
         userTwoId
       },
-      method: 'POST' 
     });
 
     if (response.status === 201) {
@@ -60,7 +63,7 @@ export function* fetchConversationsWorker() {
 
     const response = yield call(
       fetchRequest, { 
-        url: "/conversations/list", 
+        url: "/conversations/list",
         headers: { authorization: `Bearer ${token}` },
       });
 

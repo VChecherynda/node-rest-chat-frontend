@@ -7,7 +7,9 @@ import conversationsReducer from "store/modules/conversations/reducer";
 import messagesReducer from "store/modules/messages/reducer";
 import modalsReducer from "store/modules/modals/reducer";
 
-export default history => {
+export default history => (state, action) => {
+  const newState = action.type === "LOG_OUT" ? undefined : state;
+
   return combineReducers({
     auth: authReducer,
     users: usersReducer,
@@ -15,5 +17,5 @@ export default history => {
     messages: messagesReducer,
     modals: modalsReducer,
     router: connectRouter(history)
-  });
+  })(newState, action);
 };

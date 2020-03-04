@@ -1,6 +1,8 @@
 import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { getUserId } from "store/modules/auth/selectors";
+
 import { fetchUsers, clearUsers } from "store/modules/users/actions";
 import { getLoading, getUsers } from "store/modules/users/selectors";
 
@@ -17,6 +19,10 @@ export default () => {
   const status = useSelector(getShowStatus);
 
   const users = useSelector(getUsers);
+
+  const userLoggedInId = useSelector(getUserId);
+
+  const filteredUsers = users.filter((user: { id: string }) => user.id !== userLoggedInId)
   
   const useCreateConversation = (event: React.FormEvent<HTMLButtonElement>) => {
     const { value } = (event.target as HTMLButtonElement);
@@ -32,7 +38,7 @@ export default () => {
     }
   }, [dispatch, status]);
 
-  return { loading, status, users, useCreateConversation };
+  return { loading, status, filteredUsers, useCreateConversation };
 };
 
 

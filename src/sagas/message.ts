@@ -16,6 +16,8 @@ import {
   deleteMessageError
 } from "store/modules/messages/actions";
 
+import { getToken } from "store/modules/auth/selectors";
+
 import { fetchRequest } from "sagas/api";
 
 interface PayloadProps {
@@ -30,7 +32,12 @@ export function* fetchMessagesWorker({ payload }: PayloadProps) {
   try {
     yield put(setLoading(true));
 
-    const response = yield call(fetchRequest, { url: `/messages/list/${payload}` });
+    const token = yield select(getToken);
+
+    const response = yield call(fetchRequest, { 
+      url: `/messages/list/${payload}`,
+      headers: { authorization: `Bearer ${token}` }
+    });
     
     if (response.status === 200) {
       yield put(fetchMessagesResponse(response.data.messages));
@@ -53,14 +60,17 @@ export function* addMessageWorker({
   try {
     yield put(setLoading(true));
 
+    const token = yield select(getToken);
+
     const response = yield call(fetchRequest, { 
-      url: '/messages/create/', 
+      url: '/messages/create/',
+      method: 'POST',
+      headers: { authorization: `Bearer ${token}` },
       data: {
         userId,
         conversationId,
         text
       },
-      method: 'POST' 
     });
 
     if (response.status === 201) {
@@ -84,14 +94,17 @@ export function* updateMessageWorker({
 }: PayloadProps) {
   try {
     yield put(setLoading(true));
+
+    const token = yield select(getToken);
     
     const response = yield call(fetchRequest, { 
-      url: '/messages/update/', 
+      url: '/messages/update/',
+      method: 'PUT',
+      headers: { authorization: `Bearer ${token}` },
       data: {
         messageId,
         text
       },
-      method: 'PUT' 
     });
 
     if (response.status === 201) {
@@ -116,12 +129,15 @@ export function* deleteMessageWorker({
   try {
     yield put(setLoading(true));
 
+    const token = yield select(getToken);
+
     const response = yield call(fetchRequest, { 
-      url: '/messages/delete/', 
+      url: '/messages/delete/',
+      method: 'DELETE',
+      headers: { authorization: `Bearer ${token}` },
       data: {
         messageId
       },
-      method: 'DELETE'
     });
 
     if (response.status === 200) {
