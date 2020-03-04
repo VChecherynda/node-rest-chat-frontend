@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 import useHooks from './hooks';
 
@@ -17,13 +18,15 @@ const SignIn = () => {
 
   return (
     <div className={styles.SignIn}>
-      {error && <p className={styles.SignInError}>{error}</p>}
+      {error && <p className={styles.SignInError}>{error.message}</p>}
 
       <form onSubmit={useSubmit}>
         <input type="text" value={email} onChange={useHandleName} />
         <input type="password" value={password} onChange={useHandlePassword} />
         <button type="submit">Sign-in</button>
       </form>
+
+      <Link to="/sign-up">Sign Up</Link>
     </div>
   )
 };

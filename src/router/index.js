@@ -11,8 +11,10 @@ import Modals from "views/modals";
 import SignIn from "views/signin";
 import SignUp from "views/signup";
 
+import useHooks from "./hooks";
+
 export default () => {
-  const isAuthorized = false;
+  const { isAuthorized } = useHooks();
 
   let router = (
     <Switch>

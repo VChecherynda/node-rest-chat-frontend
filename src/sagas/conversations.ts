@@ -11,6 +11,8 @@ import {
   fetchConversationsError
 } from "store/modules/conversations/actions";
 
+import { getToken } from "store/modules/auth/selectors";
+
 import { fetchRequest } from "sagas/api";
 
 interface UsersProps {
@@ -54,7 +56,13 @@ export function* fetchConversationsWorker() {
   try {
     yield put(setLoading(true));
 
-    const response = yield call(fetchRequest, { url: "/conversations/list" });
+    const token = yield select(getToken);
+
+    const response = yield call(
+      fetchRequest, { 
+        url: "/conversations/list", 
+        headers: { authorization: `Bearer ${token}` },
+      });
 
     if (response.status === 200) {
       yield put(fetchConversationsResponse(response.data.conversations));

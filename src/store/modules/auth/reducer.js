@@ -6,6 +6,7 @@ import {
   signInError,
   signUpResponse,
   signUpError,
+  clearErrors,
   logOut
 } from "./actions";
 
@@ -21,9 +22,10 @@ export default handleActions(
       ...state,
       loading: payload
     }),
-    [signInResponse]: (state, { payload }) => ({
+    [signInResponse]: (state, { payload: { id, token } }) => ({
       ...state,
-      token: payload,
+      id,
+      token,
       error: ""
     }),
     [signInError]: (state, { payload }) => ({
@@ -38,6 +40,10 @@ export default handleActions(
     [signUpError]: (state, { payload }) => ({
       ...state,
       error: payload
+    }),
+    [clearErrors]: (state, { payload }) => ({
+      ...state,
+      error: ""
     }),
     [logOut]: () => ({
       defaultState

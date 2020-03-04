@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 
+import { logOut } from "store/modules/auth/actions";
+
 import { fetchMessages } from "store/modules/messages/actions";
 
 import { updateConversation } from "store/modules/conversations/actions";
-
 import { getLoading, getConversationsList } from "store/modules/conversations/selectors";
 
 import { setModalStatus } from "store/modules/modals/actions";
@@ -29,10 +30,15 @@ export default () => {
     dispatch(fetchMessages(value));
   };
 
+  const useLogout = () => {
+    dispatch(logOut());
+  }
+
   return {
     loading,
     conversations,
     useOpenUsersModal,
-    useGetConversation
+    useGetConversation,
+    useLogout
   };
 };

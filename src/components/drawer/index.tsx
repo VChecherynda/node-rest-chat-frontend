@@ -14,7 +14,13 @@ interface UserProps {
 }
 
 const Drawer = (props: DrawerProps) => {
-  const { loading, conversations, useOpenUsersModal, useGetConversation } = useHooks();
+  const { 
+    loading,
+    conversations,
+    useOpenUsersModal,
+    useGetConversation,
+    useLogout
+  } = useHooks();
 
   return (
     <div className={styles.Drawer}>
@@ -37,6 +43,7 @@ const Drawer = (props: DrawerProps) => {
           }
         </ul>
       }
+       <button type="button" onClick={useLogout}>Logout</button>
     </div>
   );
 }

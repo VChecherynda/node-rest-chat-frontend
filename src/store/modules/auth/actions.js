@@ -10,4 +10,6 @@ export const signUp = createAction("SIGN_UP");
 export const signUpResponse = createAction("SIGN_UP_RESPONSE");
 export const signUpError = createAction("SIGN_UP_ERROR");
 
+export const clearErrors = createAction("CLEAR_ERROR");
+
 export const logOut = createAction("LOG_OUT");

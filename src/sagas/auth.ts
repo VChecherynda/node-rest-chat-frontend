@@ -14,6 +14,7 @@ import {
 import { fetchRequest } from "sagas/api";
 
 interface UsersProps {
+  name: string
   email: string
   password: string
 }
@@ -43,7 +44,36 @@ export function* signInWorker({
 
   } catch (error) {
 
-    yield put(signInError(error.response.data));
+    yield put(signInError(error.response.data.message));
+
+  } finally {
+    yield put(setLoading(false));
+  }
+}
+
+export function* signUpWorker({ 
+  payload: { name, email, password } 
+}: PayloadProps) {
+  try {
+    yield put(setLoading(true));
+
+    const response = yield call(fetchRequest, { 
+      url: "/auth/sign-up",
+      data: {
+        name,
+        email,
+        password
+      },
+      method: 'POST' 
+    });
+
+    if (response.status === 201) {
+      yield put(signInResponse(response.data));
+    }
+
+  } catch (error) {
+
+    yield put(signInError(error.response.data.message));
 
   } finally {
     yield put(setLoading(false));
@@ -52,7 +82,7 @@ export function* signInWorker({
 
 export function* authWatcher() {
   yield takeEvery(signIn, signInWorker);
-  // yield takeEvery(signUp, signUpWorker);
+  yield takeEvery(signUp, signUpWorker);
 }
 
 export default authWatcher;

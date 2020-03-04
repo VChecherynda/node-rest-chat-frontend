@@ -4,6 +4,7 @@ import "./interceptors";
 interface OptionsProps {
   url: string
   method?: any
+  headers?: any
   data?: any
 }
 
@@ -19,11 +20,12 @@ const apiRequest = async (options: OptionsProps) => {
   return response;
 };
 
-export const fetchRequest = ({ url, method, data }: OptionsProps) => {
+export const fetchRequest = ({ url, method, headers, data }: OptionsProps) => {
 
   return apiRequest({
     url,
     method,
+    headers,
     data
   });
 }
