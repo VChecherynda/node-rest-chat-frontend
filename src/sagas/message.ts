@@ -16,7 +16,7 @@ import {
   deleteMessageError
 } from "store/modules/messages/actions";
 
-import { getToken } from "store/modules/auth/selectors";
+import { getToken, getUserId } from "store/modules/auth/selectors";
 
 import { fetchRequest } from "sagas/api";
 
@@ -55,12 +55,13 @@ export function* fetchMessagesWorker({ payload }: PayloadProps) {
 }
 
 export function* addMessageWorker({
-  payload: { userId = '3', conversationId, text }
+  payload: { conversationId, text }
 }: PayloadProps) {
   try {
     yield put(setLoading(true));
 
     const token = yield select(getToken);
+    const userId = yield select(getUserId);
 
     const response = yield call(fetchRequest, { 
       url: '/messages/create/',
@@ -75,7 +76,7 @@ export function* addMessageWorker({
 
     if (response.status === 201) {
 
-      yield put(addMessageResponse(response.data));
+      yield put(addMessageResponse(response.data.message));
 
     }
   } catch (error) {

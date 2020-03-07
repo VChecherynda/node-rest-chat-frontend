@@ -32,11 +32,15 @@ export default handleActions(
       ...state,
       error: payload
     }),
-    [addMessageResponse]: (state, { payload }) => ({
-      ...state,
-      entities: {},
-      list: [...state.list, payload]
-    }),
+    [addMessageResponse]: (state, { payload }) => {
+      console.log([...state.list, payload]);
+
+      return {
+        ...state,
+        entities: {},
+        list: [...state.list, payload]
+      };
+    },
     [addMessageError]: (state, { payload }) => ({
       ...state,
       error: payload

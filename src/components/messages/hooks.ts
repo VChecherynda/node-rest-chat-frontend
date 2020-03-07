@@ -31,7 +31,7 @@ export default () => {
 
   const isConversationSelect = Object.keys(selectConversation).length > 0;
 
-  const value = editableMessage.text || '';
+  const value = editableMessage && editableMessage.text;
 
   const useAddMessage = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
