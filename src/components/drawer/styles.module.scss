@@ -3,6 +3,34 @@
 .Drawer {
   width: $drawer-container-width;
   height: $drawer-container-height;
+  padding: 5px;
   border-right: 2px solid #E9EBED;
 }
 
+.Conversations {
+  margin-bottom: 30px;
+}
+
+.AddUserBtn,
+.ConversationBtn,
+.LogoutBtn  {
+  margin: 5px 0;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.AddUserBtn {
+  margin-bottom: 20px;
+  background: $orange;
+  color: $white;
+}
+
+.ConversationBtn {
+  background: $purple;
+  color: $white;
+}
+
+.LogoutBtn {
+  background: $red;
+  color: $white;
+}

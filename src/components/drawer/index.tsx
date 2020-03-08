@@ -24,12 +24,18 @@ const Drawer = (props: DrawerProps) => {
 
   return (
     <div className={styles.Drawer}>
-      <button onClick={useOpenUsersModal} type="button">Add user to conversation + </button>
+      <button
+        type="button"
+        className={styles.AddUserBtn}
+        onClick={useOpenUsersModal}
+      >
+        Add user to conversation + 
+      </button>
 
       {loading ? 
         <p>Loading...</p>
         :
-        <div>
+        <div className={styles.Conversations}>
           <h4>Converstions:</h4>
           <ul>
             {conversations.map((conversation: UserProps) => (
@@ -37,16 +43,23 @@ const Drawer = (props: DrawerProps) => {
                 <button 
                   type="button"
                   value={conversation.id}
+                  className={styles.ConversationBtn}
                   onClick={useGetConversation}
                 >
-                  {conversation.id}
+                  Conversation id {conversation.id}
                 </button>
               </li>))
             }
           </ul>
         </div>
       }
-       <button type="button" onClick={useLogout}>Logout</button>
+       <button
+        type="button"
+        className={styles.LogoutBtn} 
+        onClick={useLogout}
+      >
+        Logout
+      </button>
     </div>
   );
 }
