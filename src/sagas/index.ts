@@ -12,7 +12,7 @@ const rootSaga = function* root() {
     usersSaga(),
     conversationsSaga(),
     messageSaga(),
-    // socketsSaga()
+    socketsSaga()
   ]);
 };
 

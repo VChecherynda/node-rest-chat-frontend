@@ -74,11 +74,11 @@ export function* addMessageWorker({
       },
     });
 
-    if (response.status === 201) {
+    // if (response.status === 201) {
 
-      yield put(addMessageResponse(response.data.message));
+    //   yield put(addMessageResponse(response.data.message));
 
-    }
+    // }
   } catch (error) {
 
     yield put(addMessageError(error.response.data));

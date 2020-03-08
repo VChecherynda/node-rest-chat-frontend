@@ -1,5 +1,7 @@
 import { createAction } from "redux-actions";
 
+export const initSockets = createAction("INIT_SIOCKETS");
+
 export const setLoading = createAction("SET_CONVERSATINS_LOADING");
 
 export const signIn = createAction("SIGN_IN");
