@@ -1,3 +1,5 @@
+@import '~assets/scss/index.scss';  
+
 .Wrapper {
   display: flex;
   justify-content: center;
@@ -38,10 +40,10 @@
 }
 
 .HeaderTitle {
-  color: white;
   float: left;
-  margin: 0;
+  margin: 0 10px 0 0;
   padding: 0;
+  color: $black;
 }
 
 .Body {
@@ -59,6 +61,7 @@
   cursor: pointer;
   float: right;
   font-size: 30px;
+  line-height: 35px;
   margin: 0;
 
   &:hover {

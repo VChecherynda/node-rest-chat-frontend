@@ -20,7 +20,7 @@ const Modal = ({ children, reject, accept }: ModalProps) => {
       <div 
         className={styles.Modal}>
         <div className={styles.Header}>
-          <h3 className={styles.HeaderTitle}>Chose user to Start conversation</h3>
+          <h3 className={styles.HeaderTitle}>Chose user name to start conversation</h3>
           <span className={styles.Close} onClick={useCloseModal}>×</span>
         </div>
         <div className={styles.Body}>
