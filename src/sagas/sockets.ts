@@ -1,5 +1,5 @@
 import { eventChannel } from "redux-saga";
-import {  takeEvery, apply, select, take, call, put } from "redux-saga/effects";
+import {  takeEvery, select, take, call, put } from "redux-saga/effects";
 import io from 'socket.io-client';
 
 import {
@@ -14,10 +14,13 @@ import {
 } from "store/modules/messages/actions";
 
 import {
-  initSockets
+  initSockets,
 } from "store/modules/auth/actions";
-
 import { getToken } from "store/modules/auth/selectors";
+
+import {
+  getConversationsEntities
+} from "store/modules/conversations/selectors";
 
 import { fetchRequest } from "sagas/api";
 
@@ -51,15 +54,22 @@ function* channel() {
   while(true) {
     const { action, message } = yield take(channel);
 
-    if (action === 'create') {
+    const selectedConversation = yield select(getConversationsEntities);
+
+    const isCurrentConversation = selectedConversation.id === message.conversationId;
+
+    if (action === 'create' && isCurrentConversation) {
+
+      console.log("[addMessageResponse]");
+
       yield put(addMessageResponse(message));
     }
 
-    if (action === 'update') {
+    if (action === 'update' && isCurrentConversation) {
       yield put(updateMessageResponse(message));
     }
 
-    if (action === 'delete') {
+    if (action === 'delete' && isCurrentConversation) {
       yield put(deleteMessageResponse(message));
     }
   }

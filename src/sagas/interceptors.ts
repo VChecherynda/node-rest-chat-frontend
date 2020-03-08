@@ -7,7 +7,7 @@ axios.interceptors.response.use(
   response => response,
   error => {
     if (error.response && error.response.status === 401) {
-      // store.dispatch(logOut());
+      store.dispatch(logOut());
       console.log("Not autorazied");
     }
 

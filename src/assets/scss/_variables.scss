@@ -1,2 +1,18 @@
+// MESSAGES
 $messages-container-width: 70%;
-$drawer-container-width: calc(100% - #{$messages-container-width}); 
+$messages-container-height: 100%;
+
+// DRAWER
+$drawer-container-width: calc(100% - #{$messages-container-width});
+$drawer-container-height: 100%;
+
+// OUTPUT
+$messages-container-output-width: 100%;
+$messages-container-output-height: calc(#{$messages-container-height} - 70px);
+
+// COLORS
+$white: #fff;
+$black: #000;
+
+$blue: #0088cc;
+$green:#4CBB17;

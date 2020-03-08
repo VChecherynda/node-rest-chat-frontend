@@ -108,11 +108,11 @@ export function* updateMessageWorker({
       },
     });
 
-    if (response.status === 201) {
+    // if (response.status === 201) {
 
-      yield put(updateMessageResponse(response.data));
+    //   yield put(updateMessageResponse(response.data));
 
-    }
+    // }
   } catch (error) {
 
     yield put(updateMessageError(error.response));
@@ -141,11 +141,11 @@ export function* deleteMessageWorker({
       },
     });
 
-    if (response.status === 200) {
+    // if (response.status === 200) {
 
-      yield put(deleteMessageResponse(response.data));
+    //   yield put(deleteMessageResponse(response.data));
 
-    }
+    // }
   } catch (error) {
 
     yield put(deleteMessageError(error.response.data));

@@ -7,6 +7,7 @@ import useHooks from "./hooks"
 
 interface MessageProps {
   id: number
+  userId: number
   text: string
   createdAt: string
 }
@@ -15,10 +16,11 @@ const Messages = () => {
   const { 
     loading,
     isConversationSelect,
+    userId,
     value,
     messages,
     useSetValue,
-    useAddMessage,
+    useSendMessage,
     useEditMessage,
     useDeleteMessage
   } = useHooks();
@@ -31,30 +33,34 @@ const Messages = () => {
           :
           messages.map((message: MessageProps) => {
             return (
-              <div key={message.id}>
-                <p>{message.text}</p>
-                <p>{message.createdAt}</p>
+              <div className={String(userId) === String(message.userId) ? styles.Batman : styles.Robin} key={message.id}>
+                <p className={styles.Text}>{message.text}</p>
+                <p className={styles.Date}>{format(new Date(message.createdAt), 'dd-MM-yyyy hh:mm')}</p>
 
-                {/* <p>{format(new Date(message.createdAt), 'dd-MM-yyyy hh:mm')}</p> */}
-
-                <button value={message.id} onClick={useEditMessage} type="button">Edit</button>
-                <button value={message.id} onClick={useDeleteMessage} type="button">Delete</button>
+                {
+                  String(userId) === String(message.userId) && 
+                  <>
+                    <button value={message.id} onClick={useEditMessage} type="button">Edit</button>
+                    <button value={message.id} onClick={useDeleteMessage} type="button">Delete</button>
+                  </>
+                }
+               
               </div>)
           })
         }
       </div>
 
       {isConversationSelect && (
-        <div className={styles.Add}>
-          <form onSubmit={useAddMessage}>
+        <div className={styles.Send}>
+          <form className={styles.SendForm} onSubmit={useSendMessage}>
             <textarea 
               value={value}
-              name="message-add"
-              cols={30}
-              rows={10}
+              name="message-send"
+              cols={100}
+              rows={5}
               onChange={useSetValue}
             />
-            <button type="submit">Add</button>
+            <button className={styles.SendButton} type="submit">Send</button>
           </form>
         </div>
       )}

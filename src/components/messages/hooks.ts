@@ -7,12 +7,15 @@ import {
   updateMessage,
   deleteMessage
 } from "store/modules/messages/actions";
-
 import { 
   getLoading,
   getMessagesList,
   getMessagesEntities
 } from "store/modules/messages/selectors";
+
+import { 
+  getUserId
+} from "store/modules/auth/selectors";
 
 import { 
   getConversationsEntities
@@ -22,6 +25,8 @@ export default () => {
   const dispatch = useDispatch();
 
   const loading = useSelector(getLoading);
+
+  const userId = useSelector(getUserId);
 
   const messages = useSelector(getMessagesList);
 
@@ -33,7 +38,7 @@ export default () => {
 
   const value = editableMessage && editableMessage.text || "";
 
-  const useAddMessage = (event: React.FormEvent<HTMLFormElement>) => {
+  const useSendMessage = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (editableMessage.id) {
@@ -77,9 +82,10 @@ export default () => {
   return {
     loading,
     isConversationSelect,
+    userId,
     value,
     messages,
-    useAddMessage,
+    useSendMessage,
     useEditMessage,
     useDeleteMessage,
     useSetValue

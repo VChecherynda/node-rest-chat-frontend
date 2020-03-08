@@ -27,14 +27,10 @@ export default handleActions(
       ...state,
       entities: payload
     }),
-    [createConversationResponse]: (state, { payload }) => {
-      console.log("[createConversationResponse]", payload);
-
-      return {
-        ...state,
-        list: [...state.list, payload]
-      };
-    },
+    [createConversationResponse]: (state, { payload }) => ({
+      ...state,
+      list: [...state.list, payload]
+    }),
     [createConversationError]: (state, { payload }) => ({
       ...state,
       error: payload

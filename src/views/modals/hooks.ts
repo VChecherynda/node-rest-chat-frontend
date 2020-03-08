@@ -7,9 +7,18 @@ import { fetchUsers, clearUsers } from "store/modules/users/actions";
 import { getLoading, getUsers } from "store/modules/users/selectors";
 
 import { createConversation } from "store/modules/conversations/actions";
+import { getConversationsList } from "store/modules/conversations/selectors";
 
 import { closeModal } from "store/modules/modals/actions";
 import { getShowStatus } from "store/modules/modals/selectors";
+
+interface UserProps {
+  id: string
+}
+
+interface ConversationProps {
+  userTwoId: string
+}
 
 export default () => {
   const dispatch = useDispatch();
@@ -18,11 +27,23 @@ export default () => {
 
   const status = useSelector(getShowStatus);
 
-  const users = useSelector(getUsers);
+  const conversations = useSelector(getConversationsList);
+  const conversationsId =  conversations.map((conversation: ConversationProps) => conversation.userTwoId);
 
   const userLoggedInId = useSelector(getUserId);
+  const users = useSelector(getUsers);
 
-  const filteredUsers = users.filter((user: { id: string }) => user.id !== userLoggedInId)
+  const filteredUsers = users.reduce((acc: Array<UserProps>, user: UserProps) => {
+    if (userLoggedInId === user.id) {
+      return acc;
+    }
+
+    if (!conversationsId.includes(user.id)) {
+      acc.push(user);
+    }
+
+    return acc;
+  }, [])
   
   const useCreateConversation = (event: React.FormEvent<HTMLButtonElement>) => {
     const { value } = (event.target as HTMLButtonElement);
@@ -38,7 +59,12 @@ export default () => {
     }
   }, [dispatch, status]);
 
-  return { loading, status, filteredUsers, useCreateConversation };
+  return { 
+    loading,
+    status,
+    filteredUsers,
+    useCreateConversation
+  };
 };
 
 
