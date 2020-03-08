@@ -6,7 +6,11 @@ import {
   setLoading,
   addMessage,
   addMessageResponse,
-  addMessageError
+  addMessageError,
+  updateMessageResponse,
+  updateMessageError,
+  deleteMessageResponse,
+  deleteMessageError
 } from "store/modules/messages/actions";
 
 import {
@@ -31,7 +35,7 @@ function* createChannel(socket: any) {
   return eventChannel((emit: any) => {
 
     socket.on('messages', (action: any) => {
-      emit(action.message);
+      emit(action);
     });
 
     return () => {
@@ -45,8 +49,19 @@ function* channel() {
   const channel = yield call(createChannel, socket);
 
   while(true) {
-    const message = yield take(channel);
-    yield put(addMessageResponse(message));
+    const { action, message } = yield take(channel);
+
+    if (action === 'create') {
+      yield put(addMessageResponse(message));
+    }
+
+    if (action === 'update') {
+      yield put(updateMessageResponse(message));
+    }
+
+    if (action === 'delete') {
+      yield put(deleteMessageResponse(message));
+    }
   }
 }
 
