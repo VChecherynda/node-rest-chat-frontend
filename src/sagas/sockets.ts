@@ -1,5 +1,5 @@
 import { eventChannel } from "redux-saga";
-import {  takeEvery, select, take, call, put } from "redux-saga/effects";
+import { select, fork, take, call, cancel, put } from "redux-saga/effects";
 import io from 'socket.io-client';
 
 import {
@@ -15,23 +15,15 @@ import {
 
 import {
   initSockets,
+  logOut
 } from "store/modules/auth/actions";
-import { getToken } from "store/modules/auth/selectors";
 
 import {
   getConversationsEntities
 } from "store/modules/conversations/selectors";
 
-import { fetchRequest } from "sagas/api";
-
 function connect() {
-  const socket = io('http://localhost:8080/');
-  return new Promise(resolve => {
-    socket.on('connect', () => {
-      resolve(socket);
-      console.log("Socket connected");
-    });
-  });
+  return io(`${process.env.REACT_APP_BACKEND_URL}`);
 }
 
 function* createChannel(socket: any) {
@@ -42,6 +34,7 @@ function* createChannel(socket: any) {
     });
 
     return () => {
+      console.log('unsubsribe');
       socket.close();
     };
   });
@@ -51,32 +44,43 @@ function* channel() {
   const socket = yield call(connect);
   const channel = yield call(createChannel, socket);
 
-  while(true) {
-    const { action, message } = yield take(channel);
+  try {
+    while(true) {
+      const { action, message } = yield take(channel);
 
-    const selectedConversation = yield select(getConversationsEntities);
-
-    const isCurrentConversation = selectedConversation.id === message.conversationId;
-
-    if (action === 'create' && isCurrentConversation) {
-
-      console.log("[addMessageResponse]");
-
-      yield put(addMessageResponse(message));
+      const selectedConversation = yield select(getConversationsEntities);
+  
+      const isCurrentConversation = selectedConversation.id === message.conversationId;
+  
+      if (action === 'create' && isCurrentConversation) {
+        yield put(addMessageResponse(message));
+      }
+  
+      if (action === 'update' && isCurrentConversation) {
+        yield put(updateMessageResponse(message));
+      }
+  
+      if (action === 'delete' && isCurrentConversation) {
+        yield put(deleteMessageResponse(message));
+      }
     }
+  } catch(err) {
+    console.log(err);
+  } finally {
+    channel.close();
+  }
+}
 
-    if (action === 'update' && isCurrentConversation) {
-      yield put(updateMessageResponse(message));
-    }
-
-    if (action === 'delete' && isCurrentConversation) {
-      yield put(deleteMessageResponse(message));
-    }
+function* channelHandler() {
+  while (yield take(initSockets)) {
+    const task = yield fork(channel);
+    yield take(logOut);
+    yield cancel(task);
   }
 }
 
 export function* socketsWatcher() {
-  yield takeEvery(initSockets, channel);
+  yield fork(channelHandler);
 }
 
 export default socketsWatcher;
