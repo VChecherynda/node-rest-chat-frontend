@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
 import { logOut } from "store/modules/auth/actions";
@@ -9,14 +10,19 @@ import { getLoading, getConversationsList } from "store/modules/conversations/se
 
 import { setModalStatus } from "store/modules/modals/actions";
 
+import { Context } from 'components/modal';
+
 export default () => {
   const dispatch = useDispatch();
 
   const loading = useSelector(getLoading);
 
+  const { handleOpen } = useContext(Context);
+
   const conversations = useSelector(getConversationsList);
 
   const useOpenUsersModal = () => {
+    handleOpen();
     dispatch(setModalStatus("createConversation"));
   };
 

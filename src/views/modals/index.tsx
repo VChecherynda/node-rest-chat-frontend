@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
-import Modal from 'components/modal';
+import Modal, { Context } from 'components/modal';
 
 import useHooks from './hooks'
 
@@ -11,11 +11,14 @@ interface UserProps {
 }
 
 export default () => {
+  const { handleClose } = useContext(Context);
+
   const { loading, status, filteredUsers, useCreateConversation} = useHooks();
   
   if (status === 'createConversation') {
     return (
-      <Modal reject={() => {}} accept={() => {}}>
+      <Modal>
+        <button type="button" onClick={handleClose}>Close</button>
           {
             loading ? 
             <p>Loading...</p>

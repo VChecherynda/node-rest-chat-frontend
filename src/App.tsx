@@ -4,13 +4,16 @@ import { PersistGate } from "redux-persist/integration/react";
 
 import { store, persistor } from "./store";
 
+import { ModalProvider } from "components/modal";
 import Router from 'router';
 
 function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Router />
+        <ModalProvider>
+          <Router />
+        </ModalProvider>
       </PersistGate>
     </Provider>
   );
